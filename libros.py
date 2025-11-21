@@ -1,4 +1,5 @@
 from typing import Protocol
+from exceptions import LibroNoDisponibleError
 
 """
     - Clases
@@ -44,13 +45,14 @@ class Libro:
 
     # Una buena practica es que los metodos retorne.
     def prestar(self):
-        if self.disponible:
-            self.disponible = False
-            self.__prestamos += 1
 
-            return f"{self.titulo} prestado exitosamente. Total prestamos: {self.__prestamos}"
+        if not self.disponible:
+            raise LibroNoDisponibleError(f"El libro con titulo {self.titulo} no se encuentra disponible.")
 
-        return f"{self.titulo} no está disponible."
+        self.disponible = False
+        self.__prestamos += 1
+
+        return f"{self.titulo} prestado exitosamente. Total prestamos: {self.__prestamos}"
 
     def devolver(self):
         self.disponible = True

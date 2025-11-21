@@ -1,4 +1,5 @@
 from typing import Protocol
+from exceptions import TituloInvalidoError
 
 """
 HERENCIA
@@ -42,6 +43,10 @@ class Estudiante(Usuario):
         self.limite_libros = 3
 
     def solicitar_libro(self, titulo: str):
+
+        # Evitamos enviarle un None.
+        if not titulo:
+            raise TituloInvalidoError(f"El libro con el titulo '{titulo}', no es valido")
 
         if len(self.libros_prestados) < self.limite_libros:
 

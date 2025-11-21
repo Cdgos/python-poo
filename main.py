@@ -1,5 +1,6 @@
 # Imports orden alfabetico segun PEP8
 from biblioteca import Biblioteca
+from exceptions import BibliotecaError
 from libros import LibroFisico
 from usuarios import Estudiante, Profesor, SolicitanteProtocol
 import os
@@ -27,7 +28,24 @@ otro_libro = LibroFisico('El Principito', 'Antoine de Saint-Exupéry', '97801560
 
 biblioteca.libros = [mi_libro, mi_libro_no_disponible, otro_libro]
 
-print(biblioteca.libros)
+print("\n")
+
+print("Libros de la biblioteca:", biblioteca.libros)
+
+print("\n")
+
+try:
+    resultado = estudiante.solicitar_libro(None)
+except BibliotecaError as e:
+    print(f"{e}, {type(e)}")
+    print(f"Error: No se pudo solicitar el libro")
+
+print("\n")
+
+resultado = estudiante.solicitar_libro("El Principito")
+print(resultado)
+
+print("\n")
 
 
 
