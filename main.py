@@ -1,24 +1,17 @@
 # Imports orden alfabetico segun PEP8
 from biblioteca import Biblioteca
-from exceptions import UsuarioNoEncontradoError
-from libros import LibroFisico
-from usuarios import Estudiante, Profesor
+from exceptions import UsuarioNoEncontradoError, LibroNoDisponibleError
+from usuarios import  Profesor
+from data import data_libros, data_estudiantes
 import os
 os.system("cls")
 
 biblioteca = Biblioteca("Platzi Biblioteca")
 
-# Polimorfismo segun el usuario, solicita un libro.
-estudiante = Estudiante("Sebastian", "1192892619", "Ingeniera de Sistemas")
-estudiante_2 = Estudiante("Johan", "213123", "Profesor")
 profesor = Profesor("Andres", "123123123")
 
-# Composicion:
-mi_libro = LibroFisico('Cien años de soledad', 'Gabriel García', '9780307474728')
-otro_libro = LibroFisico('El Principito', 'Antoine de Saint-Exupéry', '9780156013987')
-
-biblioteca.usuarios = [estudiante, estudiante_2, profesor]
-biblioteca.libros = [mi_libro, otro_libro]
+biblioteca.usuarios = data_estudiantes
+biblioteca.libros = data_libros
 
 print("Bienvenido a Platzi Biblioteca\n")
 
@@ -28,13 +21,33 @@ for titulo in biblioteca.libros_disponibles():
 
 print()
 
+cedula = input("Digite el numero de cedula: ")
+
 try:
-    cedula = input("Digite el numero de cedula: ")
     usuario = biblioteca.buscar_usuario(cedula)
     print(usuario)
-except UsuarioNoEncontradoError:
-    print("El usuario que estas buscando no existe.") 
+except UsuarioNoEncontradoError as e:
+    print(e) 
+    exit()  # ⛔ Detener si el usuario no existe
 
+
+titulo = input("Digite el titulo del libro: ")
+
+try:
+    libro = biblioteca.buscar_titulo(titulo)
+    print(f"El libro que seleccionaste es: {libro}")
+except LibroNoDisponibleError as e:
+    print(e)
+
+resultado = usuario.solicitar_libro(titulo)
+print(f"\n{resultado}")
+
+try:
+    resultado_prestar = libro.prestar()
+    print(f"\n{resultado_prestar}")
+except LibroNoDisponibleError as e:
+    print(e)
+    exit()  # ⛔ Detener si el libro no está disponible
 
 # print("\nUsuarios de la biblioteca:", biblioteca.libros)
 # print("\nLibros de la biblioteca:", biblioteca.libros)
