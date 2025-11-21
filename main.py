@@ -1,117 +1,33 @@
-"""
-    - Clases
-    - Constructor: init
-    - Metodos: tostring, getters, setters.
-    - Encapsulamiento
-
-
-    - Composicion en Python:
-    Tecnica que permite crear relaciones entre objetos sin depender de herencias.
-
-"""
-
-# ========================= #
+# Imports orden alfabetico segun PEP8
+from biblioteca import Biblioteca
+from libros import LibroFisico
+from usuarios import Estudiante, Profesor, SolicitanteProtocol
 import os
 os.system("cls")
-# ========================= #
 
-from typing import Protocol
+biblioteca = Biblioteca("Platzi Biblioteca")
 
-class LibroProtocol(Protocol):
+# Polimorfismo segun el usuario, solicita un libro.
+estudiante = Estudiante("Sebastian", "1192892619", "Ingeniera de Sistemas")
+estudiante_2 = Estudiante("Johan", "213123", "Profesor")
+profesor = Profesor("Andres", "123123123")
 
-    def prestar(self) -> str:
-        """ Metodo de prestar un libro """
-        ...
+# Este no se puede agregar en el listado porque no cumple el protocolo.
+# libro = Libro("Titulo de prueba", "Autor de prueba", "1231234", True)
 
-    def devolver(self) -> str:
-        """ Metodo de devolver un libro """
-        ...
+usuarios: list[SolicitanteProtocol] = [estudiante, estudiante_2, profesor] # Libro no se puede agregar aqui.
 
-    def calcular_duracion(self) -> str:
-        """ Metodo de calcular duracion de prestamo de un libro """
-        ...
-
-
-class Libro:
-
-    # Constructor
-    def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool):
-        self.titulo = titulo
-        self.autor = autor
-        self.isbn = isbn
-        self.disponible = disponible
-        # Encapsulamiento: doble _ para evitar que accedan.
-        self.__prestamos = 0
-
-    # Metodos
-
-    # Metodo toString: return --> str.
-    def __str__(self):
-        return f"{self.titulo} por {self.autor}, disponible: {self.disponible}"
-
-    # Una buena practica es que los metodos retorne.
-    def prestar(self):
-        if self.disponible:
-            self.disponible = False
-            self.__prestamos += 1
-
-            return f"{self.titulo} prestado exitosamente. Total prestamos: {self.__prestamos}"
-
-        return f"{self.titulo} no está disponible."
-
-    def devolver(self):
-        self.disponible = True
-
-        return f"{self.titulo} devuelto y disponible nuevamente."
-    
-    def es_popular(self):
-        return self.__prestamos > 5
-    
-    # Metodos Getter y Setter:
-    def get_prestamos(self):
-        return self.__prestamos
-    
-    def set_prestamos(self, prestamos: int):
-        self.__prestamos = prestamos
-
-
-class LibroFisico(Libro):
-    def calcular_duracion(self):
-        return "7 dias"
-
-
-class LibroDigital(Libro):
-    def calcular_duracion(self):
-        return "14 dias"
-
-# ------------------- COMPOSICION EJEMPLO ------------------- #
-
-# Diferencias
-# Herencia: El usuario es un profesior.
-# Composicion: Biblioteca tiene libros, usuarios, etc. Interacturar con varios obtejos por medio
-# de una sola clase.
-
-class Biblioteca:
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.libros: list[Libro] = []
-        self.usuarios = []
-
-    def libros_disponibles(self):
-        return [
-            libro.titulo for libro in self.libros if libro.disponible
-        ]
-
+for usuario in usuarios:
+    print(usuario.solicitar_libro("Titulo de ejemplo"))
 
 # Composicion:
 mi_libro = LibroFisico('Cien años de soledad', 'Gabriel García', '9780307474728', True)
 mi_libro_no_disponible = LibroFisico('No Disponible', 'Gabriel García', '123', False)
 otro_libro = LibroFisico('El Principito', 'Antoine de Saint-Exupéry', '9780156013987', True)
 
-biblioteca = Biblioteca("Platzi Biblioteca")
 biblioteca.libros = [mi_libro, mi_libro_no_disponible, otro_libro]
 
-print(f"Libros disponibles: {biblioteca.libros_disponibles()}")
+print(biblioteca.libros)
 
 
 
@@ -138,3 +54,29 @@ print(f"Libros disponibles: {biblioteca.libros_disponibles()}")
 
 # for libro in catalogo:
 #     print(libro)
+
+
+
+# print(estudiante.solicitar_libro("Python basico"))
+# print(estudiante.solicitar_libro("Python intermedio"))
+# print(estudiante.solicitar_libro("Python avanzado"))
+# print(estudiante.solicitar_libro("Python / Django"))
+
+# print(estudiante.devolver_libro("Python basico"))
+
+# print(estudiante.solicitar_libro("Python FastAPI"))
+# print(estudiante.solicitar_libro("Python / Django"))
+
+# print("\n")
+
+# print(profesor.solicitar_libro("Python basico"))
+# print(profesor.solicitar_libro("Python intermedio"))
+# print(profesor.solicitar_libro("Python avanzado"))
+# print(profesor.solicitar_libro("Python / Django"))
+
+
+
+
+
+
+# LibroProtocol: prestar y calcular duracion,  LibroFisico y LibroElectronico que cumplan el protocolo.

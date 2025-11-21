@@ -1,7 +1,4 @@
-# ========================= #
-import os
-os.system("cls")
-# ========================= #
+from typing import Protocol
 
 """
 HERENCIA
@@ -10,8 +7,6 @@ HERENCIA
 POLIMORFISMO con Protocol.
 
 """
-
-from typing import Protocol
 
 class SolicitanteProtocol(Protocol):
 
@@ -81,41 +76,3 @@ class Profesor(Usuario):
         self.libros_prestados.append(titulo)
 
         return f"Prestamo del libro '{titulo}' autorizado"
-    
-
-estudiante = Estudiante("Sebastian", "1192892619", "Ingeniera de Sistemas")
-estudiante_2 = Estudiante("Johan", "213123", "Profesor")
-profesor = Profesor("Andres", "123123123")
-
-from main import Libro
-libro = Libro("Titulo de prueba", "Autor de prueba", "1231234", True)
-
-usuarios: list[SolicitanteProtocol] = [estudiante, estudiante_2, profesor, libro]
-
-for usuario in usuarios:
-    print(usuario.solicitar_libro("Titulo de ejemplo"))
-
-
-# print(estudiante.solicitar_libro("Python basico"))
-# print(estudiante.solicitar_libro("Python intermedio"))
-# print(estudiante.solicitar_libro("Python avanzado"))
-# print(estudiante.solicitar_libro("Python / Django"))
-
-# print(estudiante.devolver_libro("Python basico"))
-
-# print(estudiante.solicitar_libro("Python FastAPI"))
-# print(estudiante.solicitar_libro("Python / Django"))
-
-# print("\n")
-
-# print(profesor.solicitar_libro("Python basico"))
-# print(profesor.solicitar_libro("Python intermedio"))
-# print(profesor.solicitar_libro("Python avanzado"))
-# print(profesor.solicitar_libro("Python / Django"))
-
-
-
-
-
-
-# LibroProtocol: prestar y calcular duracion,  LibroFisico y LibroElectronico que cumplan el protocolo.
