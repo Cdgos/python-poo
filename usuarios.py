@@ -42,6 +42,14 @@ class Estudiante(Usuario):
         self.carrera = carrera
         self.limite_libros = 3
 
+    def __str__(self) -> str:
+        return (
+            f"Estudiante: {self.nombre}\n"
+            f"Cedula: {self.cedula}\n"
+            f"Carrera: {self.carrera}\n"
+            f"Limite de prestamos: {self.limite_libros}\n"
+        )
+
     def solicitar_libro(self, titulo: str):
 
         # Evitamos enviarle un None.
@@ -71,6 +79,12 @@ class Profesor(Usuario):
 
         # El profesor no tiene limite de libros, es distinto al Estudiante.
         self.limite_libros = None
+
+    def __str__(self) -> str:
+        return (
+            f"Profesor: {self.nombre}\n"
+            f"Cedula: {self.cedula}\n"
+        )
 
     def solicitar_libro(self, titulo: str):
 

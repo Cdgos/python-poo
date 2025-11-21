@@ -1,8 +1,8 @@
 # Imports orden alfabetico segun PEP8
 from biblioteca import Biblioteca
-from exceptions import BibliotecaError
+from exceptions import UsuarioNoEncontradoError
 from libros import LibroFisico
-from usuarios import Estudiante, Profesor, SolicitanteProtocol
+from usuarios import Estudiante, Profesor
 import os
 os.system("cls")
 
@@ -13,41 +13,51 @@ estudiante = Estudiante("Sebastian", "1192892619", "Ingeniera de Sistemas")
 estudiante_2 = Estudiante("Johan", "213123", "Profesor")
 profesor = Profesor("Andres", "123123123")
 
+# Composicion:
+mi_libro = LibroFisico('Cien años de soledad', 'Gabriel García', '9780307474728')
+otro_libro = LibroFisico('El Principito', 'Antoine de Saint-Exupéry', '9780156013987')
+
+biblioteca.usuarios = [estudiante, estudiante_2, profesor]
+biblioteca.libros = [mi_libro, otro_libro]
+
+print("Bienvenido a Platzi Biblioteca\n")
+
+print("Libros disponibles:\n")
+for titulo in biblioteca.libros_disponibles():
+    print(f"  - {titulo}")
+
+print()
+
+try:
+    cedula = input("Digite el numero de cedula: ")
+    usuario = biblioteca.buscar_usuario(cedula)
+    print(usuario)
+except UsuarioNoEncontradoError:
+    print("El usuario que estas buscando no existe.") 
+
+
+# print("\nUsuarios de la biblioteca:", biblioteca.libros)
+# print("\nLibros de la biblioteca:", biblioteca.libros)
+
 # Este no se puede agregar en el listado porque no cumple el protocolo.
 # libro = Libro("Titulo de prueba", "Autor de prueba", "1231234", True)
 
-usuarios: list[SolicitanteProtocol] = [estudiante, estudiante_2, profesor] # Libro no se puede agregar aqui.
+# usuarios: list[SolicitanteProtocol] = [estudiante, estudiante_2, profesor] # Libro no se puede agregar aqui.
+# for usuario in usuarios:
+#     print(usuario.solicitar_libro("Titulo de ejemplo"))
 
-for usuario in usuarios:
-    print(usuario.solicitar_libro("Titulo de ejemplo"))
+# try:
+#     resultado = estudiante.solicitar_libro(None)
+# except BibliotecaError as e:
+#     print(f"{e}, {type(e)}")
+#     print(f"Error: No se pudo solicitar el libro")
 
-# Composicion:
-mi_libro = LibroFisico('Cien años de soledad', 'Gabriel García', '9780307474728', True)
-mi_libro_no_disponible = LibroFisico('No Disponible', 'Gabriel García', '123', False)
-otro_libro = LibroFisico('El Principito', 'Antoine de Saint-Exupéry', '9780156013987', True)
+# print("\n")
 
-biblioteca.libros = [mi_libro, mi_libro_no_disponible, otro_libro]
+# resultado = estudiante.solicitar_libro("El Principito")
+# print(resultado)
 
-print("\n")
-
-print("Libros de la biblioteca:", biblioteca.libros)
-
-print("\n")
-
-try:
-    resultado = estudiante.solicitar_libro(None)
-except BibliotecaError as e:
-    print(f"{e}, {type(e)}")
-    print(f"Error: No se pudo solicitar el libro")
-
-print("\n")
-
-resultado = estudiante.solicitar_libro("El Principito")
-print(resultado)
-
-print("\n")
-
-
+# print("\n")
 
 # Prints: Clases, metodos, encapsulamiento, herencia, etc.
 # # Instancias
@@ -72,8 +82,6 @@ print("\n")
 
 # for libro in catalogo:
 #     print(libro)
-
-
 
 # print(estudiante.solicitar_libro("Python basico"))
 # print(estudiante.solicitar_libro("Python intermedio"))

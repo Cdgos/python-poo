@@ -29,7 +29,7 @@ class LibroProtocol(Protocol):
 class Libro:
 
     # Constructor
-    def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool):
+    def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool = True):
         self.titulo = titulo
         self.autor = autor
         self.isbn = isbn
